@@ -6,6 +6,7 @@ import { StepsIndicator } from "@/components/upload/steps-indicator";
 import { FileDropZone } from "@/components/upload/file-drop-zone";
 import { ScriptTypeSelector } from "@/components/upload/script-type-selector";
 import { Button } from "@/components/ui/button";
+import { STORAGE_KEYS, type UploadMeta } from "@/lib/parser";
 import type { ScriptType } from "@/lib/types";
 
 const STEPS = [
@@ -21,13 +22,38 @@ export default function UploadPage() {
   const [scriptType, setScriptType] = useState<ScriptType | null>(null);
   const [language, setLanguage] = useState<string>("zh-CN");
   const [title, setTitle] = useState("");
+  const [isReading, setIsReading] = useState(false);
 
-  const canProceed = file && scriptType;
+  const canProceed = file && scriptType && !isReading;
 
   const handleSubmit = () => {
-    if (!canProceed) return;
-    // Phase 2.2 will implement the actual parsing call
-    router.push("/upload/parsing");
+    if (!canProceed || !file) return;
+
+    setIsReading(true);
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const text = e.target?.result as string;
+
+      // Store novel text and metadata for the parsing page
+      sessionStorage.setItem(STORAGE_KEYS.NOVEL_TEXT, text);
+
+      const meta: UploadMeta = {
+        fileName: file.name,
+        scriptType: scriptType!,
+        language,
+        title: title || file.name.replace(/\.\w+$/, ""),
+      };
+      sessionStorage.setItem(STORAGE_KEYS.NOVEL_META, JSON.stringify(meta));
+
+      router.push("/upload/parsing");
+    };
+
+    reader.onerror = () => {
+      setIsReading(false);
+    };
+
+    reader.readAsText(file);
   };
 
   return (
@@ -89,7 +115,7 @@ export default function UploadPage() {
               返回
             </Button>
             <Button disabled={!canProceed} onClick={handleSubmit}>
-              下一步：分章解析
+              {isReading ? "正在读取文件..." : "下一步：分章解析"}
             </Button>
           </div>
         </div>
