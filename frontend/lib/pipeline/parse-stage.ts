@@ -32,7 +32,7 @@ interface RawChapter {
  */
 function splitIntoChapters(text: string): RawChapter[] {
   const chapterPattern =
-    /(?:^|\n)\s*(第[一二三四五六七八九十百千\d]+[章回]|Chapter\s*\d+|CHAPTER\s*\d+|卷[一二三四五六七八九十百千\d]+|篇[一二三四五六七八九十百千\d]+)[：:\s]*([^\n]*)/gi;
+    /(?:^|\n)[#\s]*(第[一二三四五六七八九十百千\d]+[章回]|Chapter\s*\d+|CHAPTER\s*\d+|卷[一二三四五六七八九十百千\d]+|篇[一二三四五六七八九十百千\d]+)[：:\s]*([^\n]*)/gi;
 
   const matches: { index: number; marker: string; title: string }[] = [];
   let match: RegExpExecArray | null;

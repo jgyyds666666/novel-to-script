@@ -32,7 +32,7 @@ export function parseChapters(text: string): ParseResult {
 
   // Combined pattern for Chinese and English chapter markers
   const chapterPattern =
-    /(?:^|\n)\s*(第[一二三四五六七八九十百千\d]+章|Chapter\s*\d+|CHAPTER\s*\d+)[：:\s]*(.*?)(?=\n|$)/gi;
+    /(?:^|\n)[#\s]*(第[一二三四五六七八九十百千\d]+章|Chapter\s*\d+|CHAPTER\s*\d+)[：:\s]*(.*?)(?=\n|$)/gi;
 
   const matches: { index: number; marker: string; title: string }[] = [];
   let match: RegExpExecArray | null;
