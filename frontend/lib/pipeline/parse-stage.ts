@@ -103,7 +103,8 @@ async function parseOneChapter(
   raw: RawChapter,
   index: number,
   total: number,
-  language: string
+  language: string,
+  apiKey?: string
 ): Promise<ChapterSummary> {
   const userMessage = [
     `请分析以下小说片段（这是第 ${index + 1}/${total} 章）：`,
@@ -118,6 +119,7 @@ async function parseOneChapter(
     userMessage,
     outputIsJson: true,
     maxTokens: 8000,
+    apiKey,
   });
 
   // The AI returns { chapters: [...] }, we take the first (and usually only) chapter
@@ -143,7 +145,8 @@ async function parseOneChapter(
 export async function aiParseChapters(
   text: string,
   language: string,
-  onProgress: (p: PipelineProgress) => void
+  onProgress: (p: PipelineProgress) => void,
+  apiKey?: string
 ): Promise<ChapterSummary[]> {
   // Step 1: Regex split
   onProgress({
@@ -177,7 +180,8 @@ export async function aiParseChapters(
       rawChapters[i],
       i,
       rawChapters.length,
-      language
+      language,
+      apiKey
     );
     summaries.push(summary);
   }

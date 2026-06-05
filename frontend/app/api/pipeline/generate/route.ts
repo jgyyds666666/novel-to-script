@@ -18,12 +18,14 @@ export async function POST(request: NextRequest) {
       title,
       language,
       fileName,
+      apiKey,
     } = body as {
       chapters?: ChapterSummary[];
       scriptType?: string;
       title?: string;
       language?: string;
       fileName?: string;
+      apiKey?: string;
     };
 
     // Validate
@@ -41,12 +43,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check API key
-    if (!process.env.DEEPSEEK_API_KEY) {
+    // Check API key: prefer request body key, fallback to env var
+    const resolvedApiKey = apiKey?.trim() || process.env.DEEPSEEK_API_KEY;
+    if (!resolvedApiKey) {
       return Response.json(
         {
           error:
-            "未配置 DeepSeek API Key。请在 .env.local 中设置 DEEPSEEK_API_KEY。",
+            "未配置 DeepSeek API Key。请在页面中输入你的 API Key，或在 .env.local 中设置 DEEPSEEK_API_KEY。",
         },
         { status: 500 }
       );
@@ -78,6 +81,7 @@ export async function POST(request: NextRequest) {
               title: title || "未命名剧本",
               language: language || "zh-CN",
               fileName,
+              apiKey: resolvedApiKey,
             },
             onProgress
           );
