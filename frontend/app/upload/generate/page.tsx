@@ -8,6 +8,7 @@ import { ProgressDisplay } from "@/components/upload/progress-display";
 import { Button } from "@/components/ui/button";
 import { STORAGE_KEYS, type UploadMeta } from "@/lib/parser";
 import { useSSEStream } from "@/hooks/use-sse-stream";
+import { useApiKey } from "@/hooks/use-api-key";
 import type { ChapterSummary } from "@/lib/pipeline/types";
 import type { Script } from "@/lib/types";
 
@@ -27,6 +28,7 @@ export default function GeneratePage() {
   const [meta, setMeta] = useState<UploadMeta | null>(null);
   const [error, setError] = useState<string | null>(null);
   const hasStarted = useRef(false);
+  const { apiKey } = useApiKey();
 
   const {
     status,
@@ -41,9 +43,7 @@ export default function GeneratePage() {
     hasStarted.current = true;
 
     const metaStr = sessionStorage.getItem(STORAGE_KEYS.NOVEL_META);
-    const chaptersStr = sessionStorage.getItem(
-      "novel-to-script:chapters"
-    );
+    const chaptersStr = sessionStorage.getItem("novel-to-script:chapters");
 
     if (!chaptersStr) {
       setError("未找到章节数据，请返回重新解析。");
@@ -61,22 +61,20 @@ export default function GeneratePage() {
 
       const chapters: ChapterSummary[] = JSON.parse(chaptersStr);
 
-      // Start AI generation via SSE
       start("/api/pipeline/generate", {
         chapters,
         scriptType: parsedMeta.scriptType,
         title: parsedMeta.title,
         language: parsedMeta.language || "zh-CN",
         fileName: parsedMeta.fileName,
+        apiKey: apiKey || undefined,
       });
     } catch {
       setError("数据解析失败，请返回重试。");
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [apiKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleBack = () => {
-    router.push("/upload/parsing");
-  };
+  const handleBack = () => router.push("/upload/parsing");
 
   const handleRestart = () => {
     sessionStorage.removeItem(STORAGE_KEYS.NOVEL_TEXT);
@@ -103,30 +101,46 @@ export default function GeneratePage() {
 
         {displayError && (
           <div className="rounded-lg border border-destructive/50 bg-destructive/5 p-6 text-center space-y-4">
-            <p className="text-sm text-destructive">{displayError}</p>
-            <Button variant="outline" onClick={handleRestart}>
-              重新开始
-            </Button>
+            <p className="text-sm text-destructive font-medium">生成失败</p>
+            <p className="text-xs text-muted-foreground">{displayError}</p>
+            <div className="flex justify-center gap-3">
+              <Button variant="outline" onClick={handleBack}>
+                ← 返回修改
+              </Button>
+              <Button variant="outline" onClick={handleRestart}>
+                重新开始
+              </Button>
+            </div>
           </div>
         )}
 
         {!displayError && isLoading && (
-          <ProgressDisplay
-            progress={progress}
-            isActive={isLoading}
-          />
+          <ProgressDisplay progress={progress} isActive={isLoading} />
         )}
 
         {hasScript && (
           <div className="space-y-6">
+            {/* Stats banner */}
             <div className="rounded-lg bg-muted/50 px-4 py-3 text-center">
-              <p className="text-sm font-medium">剧本已生成</p>
+              <p className="text-sm font-medium text-green-600 dark:text-green-400">
+                剧本生成完成
+              </p>
               <p className="text-xs text-muted-foreground mt-0.5">
-                {result.script.meta.title} · {result.script.scenes.length}{" "}
-                个场景 ·{" "}
-                {result.script.adaptation_report?.total_dialogue_lines ??
-                  0}{" "}
-                行对白
+                {result.script.meta.title}
+                <span className="mx-1.5">·</span>
+                {result.script.scenes.length} 个场景
+                <span className="mx-1.5">·</span>
+                {result.script.characters.length} 个人物
+                <span className="mx-1.5">·</span>
+                {result.script.adaptation_report?.total_dialogue_lines ?? 0} 行对白
+                {(result.script.adaptation_report?.uncertainty_count ?? 0) > 0 && (
+                  <>
+                    <span className="mx-1.5">·</span>
+                    <span className="text-amber-500">
+                      {result.script.adaptation_report!.uncertainty_count} 处待确认
+                    </span>
+                  </>
+                )}
               </p>
             </div>
 
@@ -134,7 +148,7 @@ export default function GeneratePage() {
 
             <div className="flex justify-between pt-4">
               <Button variant="outline" onClick={handleBack}>
-                返回修改
+                ← 返回修改
               </Button>
               <Button variant="outline" onClick={handleRestart}>
                 重新开始
