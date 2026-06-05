@@ -5,7 +5,8 @@
 
 ## 🎬 Demo 视频
 
-> [待录制] AI 全链路已就绪，即将录制实际运行演示（含语音讲解）并上传 B 站
+- **B 站链接**：[https://www.bilibili.com/video/BV1vw7y6hEME/](https://www.bilibili.com/video/BV1vw7y6hEME/)
+- **内容**：AI 小说转剧本全链路演示（上传 → AI 分章解析 → AI 剧本生成 → YAML 导出），含人声讲解
 
 ## ✨ 核心功能
 
@@ -157,5 +158,5 @@ novel-to-script/
 
 ---
 
-> **当前状态**：第二轮已完成（DeepSeek AI 真实接入，SSE 流式进度，API Key UI 配置，Schema 在线文档，剧本预览三 Tab），Demo 视频待录制。
+> **当前状态**：第二轮已完成（DeepSeek AI 真实接入，SSE 流式进度，API Key UI 配置，Schema 在线文档，剧本预览三 Tab），Demo 视频已录制并上传 B 站。
 

@@ -52,8 +52,8 @@
 | Fountain 导出 UI | ⬜ | 前端接入 Fountain 格式下载 |
 | 分镜脚本扩展 | ⬜ | 可选 shot 块生成 |
 | UI 打磨 | ⬜ | 加载骨架屏/暗色模式/响应式优化 |
-| 🎬 Demo 视频 | ⬜ | 用户自行录制（人声讲解 + B 站上传） |
-| README 补全 | ⬜ | 汇总 Demo 链接 |
+| 🎬 Demo 视频 | ✅ done | `main` | [B 站链接](https://www.bilibili.com/video/BV1vw7y6hEME/) — 全链路演示含人声讲解 |
+| README 补全 | ✅ done | `main` | 汇总 Demo 链接、依赖表、目录结构 |
 
 ## Known Issues
 
