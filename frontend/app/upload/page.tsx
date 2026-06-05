@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { StepsIndicator } from "@/components/upload/steps-indicator";
 import { FileDropZone } from "@/components/upload/file-drop-zone";
 import { ScriptTypeSelector } from "@/components/upload/script-type-selector";
+import { ApiKeyConfig } from "@/components/upload/api-key-config";
 import { Button } from "@/components/ui/button";
 import { STORAGE_KEYS, type UploadMeta } from "@/lib/parser";
 import type { ScriptType } from "@/lib/types";
@@ -35,7 +36,6 @@ export default function UploadPage() {
     reader.onload = (e) => {
       const text = e.target?.result as string;
 
-      // Store novel text and metadata for the parsing page
       sessionStorage.setItem(STORAGE_KEYS.NOVEL_TEXT, text);
 
       const meta: UploadMeta = {
@@ -49,17 +49,13 @@ export default function UploadPage() {
       router.push("/upload/parsing");
     };
 
-    reader.onerror = () => {
-      setIsReading(false);
-    };
-
+    reader.onerror = () => setIsReading(false);
     reader.readAsText(file);
   };
 
   return (
     <main className="min-h-screen p-8">
       <div className="mx-auto max-w-2xl space-y-8 pt-12">
-        {/* Header */}
         <div className="space-y-2 text-center">
           <h1 className="text-3xl font-bold tracking-tight">开始转换</h1>
           <p className="text-muted-foreground">
@@ -67,25 +63,27 @@ export default function UploadPage() {
           </p>
         </div>
 
-        {/* Steps */}
         <StepsIndicator steps={STEPS} currentStep={0} />
 
-        {/* Form */}
-        <div className="space-y-8">
+        <div className="space-y-6">
+          {/* API Key Configuration */}
+          <ApiKeyConfig />
+
           {/* File Upload */}
           <FileDropZone onFileAccepted={setFile} />
 
           {/* Script Title */}
           <div className="space-y-2">
             <label htmlFor="title" className="text-sm font-medium">
-              剧本标题（可选）
+              剧本标题
+              <span className="ml-1 text-xs text-muted-foreground font-normal">（可选，留空自动从文件名提取）</span>
             </label>
             <input
               id="title"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="留空则自动从文本中提取"
+              placeholder="例：夺冠之路"
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
@@ -104,18 +102,19 @@ export default function UploadPage() {
               onChange={(e) => setLanguage(e.target.value)}
               className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <option value="zh-CN">中文</option>
+              <option value="zh-CN">中文（简体）</option>
+              <option value="zh-TW">中文（繁體）</option>
               <option value="en">English</option>
             </select>
           </div>
 
           {/* Submit */}
-          <div className="flex justify-end gap-3 pt-4">
+          <div className="flex justify-end gap-3 pt-2">
             <Button variant="outline" onClick={() => router.push("/")}>
               返回
             </Button>
             <Button disabled={!canProceed} onClick={handleSubmit}>
-              {isReading ? "正在读取文件..." : "下一步：分章解析"}
+              {isReading ? "正在读取文件..." : "下一步：分章解析 →"}
             </Button>
           </div>
         </div>

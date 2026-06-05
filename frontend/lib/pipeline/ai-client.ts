@@ -6,11 +6,11 @@ import OpenAI from "openai";
 
 // ---- Configuration ----
 
-function getClient(): OpenAI {
-  const apiKey = process.env.DEEPSEEK_API_KEY;
+function getClient(apiKeyOverride?: string): OpenAI {
+  const apiKey = apiKeyOverride || process.env.DEEPSEEK_API_KEY;
   if (!apiKey) {
     throw new Error(
-      "未配置 DeepSeek API Key。请在 .env.local 中设置 DEEPSEEK_API_KEY。"
+      "未配置 DeepSeek API Key。请在页面中输入你的 API Key，或在 .env.local 中设置 DEEPSEEK_API_KEY。"
     );
   }
 
@@ -55,6 +55,8 @@ export interface AiGenerateParams {
   /** If provided, enables JSON mode and validates against this schema */
   outputIsJson?: boolean;
   maxTokens?: number;
+  /** Override API key (from UI config), falls back to DEEPSEEK_API_KEY env var */
+  apiKey?: string;
 }
 
 /**
@@ -64,8 +66,8 @@ export interface AiGenerateParams {
 export async function aiGenerate<T = string>(
   params: AiGenerateParams
 ): Promise<T> {
-  const { systemPrompt, userMessage, outputIsJson, maxTokens } = params;
-  const client = getClient();
+  const { systemPrompt, userMessage, outputIsJson, maxTokens, apiKey } = params;
+  const client = getClient(apiKey);
 
   let lastError: Error | null = null;
 
