@@ -1,6 +1,6 @@
 import { useState } from "react";
 import yaml from "js-yaml";
-import type { Script } from "@/lib/types";
+import type { ContentBlock, Script } from "@/lib/types";
 import { SCRIPT_TYPE_LABELS } from "@/lib/constants";
 
 interface ScriptPreviewProps {
@@ -181,7 +181,7 @@ function ScenesView({ script }: { script: Script }) {
   );
 }
 
-function SceneBlock({ block }: { block: { type: string; [key: string]: unknown } }) {
+function SceneBlock({ block }: { block: ContentBlock }) {
   if (block.type === "action") {
     return (
       <p className="text-xs text-muted-foreground leading-relaxed">

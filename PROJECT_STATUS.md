@@ -32,7 +32,10 @@
 | 进度展示组件 | ✅ done | (同上) | `ProgressDisplay` 实时显示 AI 处理进度 |
 | API Key UI 配置 | ✅ done | `feat/api-key-ui-and-ux` | localStorage 持久化 + 运行时注入 |
 | 剧本预览优化 | ✅ done | `feat/api-key-ui-and-ux` | 三 Tab（摘要/场景/YAML）+ js-yaml 序列化 |
-| Schema 参考页 | ✅ done | (待提交) | `/docs/schema` 渲染 SCHEMA-RFC.md |
+| Schema 参考页 | ✅ done | `feat/api-key-ui-and-ux` | `/docs/schema` 渲染 SCHEMA-RFC.md |
+| Anthropic 设计系统 | ✅ done | `main` (5a3e89f) | 全站 Anthropic 暖色调主题 + Poppins/Lora 字体 + 组件精修 |
+| 设计 Skill | ✅ done | `main` (5a3e89f) | `.claude/skills/anthropic-design/SKILL.md` 完整设计系统文档 |
+| TypeScript 修复 | ✅ done | `main` (待提交) | `script-preview.tsx` ContentBlock 类型修复 |
 
 ### 用户完整流程
 ```
@@ -59,6 +62,7 @@
 | ~~`/docs/schema` 404 → 首页"查看 Schema"链接无路由~~ | — | ✅ 已修复 (2026-06-05) |
 | ~~分章页面章节编号显示错误（无标记时显示"第2章"）~~ | — | ✅ 已修复 (2026-06-05, `497533e`) |
 | ~~`##第3章` Markdown 格式章节标记无法识别~~ | — | ✅ 已修复 (2026-06-05, `497533e`) |
+| ~~`script-preview.tsx` ContentBlock 类型不兼容~~ | — | ✅ 已修复 (2026-06-05) |
 | 后端 `backend/src/` 管线未与前端 Next.js API Routes 同步 | low | ⬜ 后端代码为独立模块，前端已内联同等逻辑 |
 | 文件超大时 AI 批处理 token 可能溢出 | medium | ⬜ 需增加 chunk 策略优化 |
 
@@ -68,7 +72,8 @@
 |----|------|------|
 | CLAUDE.md | ✅ 已配置 | 含比赛 skill 强制调用、PROJECT_STATUS/README 自动更新、PR 模板 |
 | settings.local.json hooks | ✅ 已配置 | PostToolUse: git commit 后自动检查文档更新；git push 后提示 PR 创建 |
-| shadcn/ui 组件 | ✅ 已安装 | card, tabs, select, input, textarea, badge, progress (共7个)
+| shadcn/ui 组件 | ✅ 已安装 | card, tabs, select, input, textarea, badge, progress (共7个) |
+| anthropic-design skill | ✅ 已创建 | `.claude/skills/anthropic-design/SKILL.md` 可复用设计系统 |
 
 ## 技术栈
 
