@@ -12,9 +12,9 @@ export function ChapterCard({ chapter }: ChapterCardProps) {
     <div className="rounded-lg border p-4 space-y-2 hover:border-primary/30 transition-colors">
       <div className="flex items-center justify-between">
         <h3 className="font-medium text-sm">
-          {chapter.chapter_number >= 0
-            ? `第 ${chapter.chapter_number + 1} 章`
-            : chapter.title || `第 ${chapter.chapter_number} 章`}
+          {chapter.chapter_number === 0
+            ? (chapter.title || "序言/前言")
+            : `第 ${chapter.chapter_number} 章`}
         </h3>
         <div className="flex gap-3 text-xs text-muted-foreground">
           <span>{chapter.paragraph_count} 段</span>

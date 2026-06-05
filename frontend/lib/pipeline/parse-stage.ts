@@ -82,10 +82,15 @@ function splitIntoChapters(text: string): RawChapter[] {
     });
   }
 
-  // Fix chapter numbers
-  chapters.forEach((ch, idx) => {
-    ch.chapter_number = idx;
-  });
+  // Fix chapter numbers: prologue stays 0, real chapters start from 1
+  let realNum = 0;
+  for (const ch of chapters) {
+    if (ch.chapter_number === 0 && ch.title === "序言/前言") {
+      continue; // Prologue stays at 0
+    }
+    realNum++;
+    ch.chapter_number = realNum;
+  }
 
   return chapters;
 }

@@ -54,7 +54,10 @@ async function generateScenesForBatch(
   const chapterContext = batch
     .map((ch) => {
       const parts: string[] = [];
-      parts.push(`### 第 ${ch.chapter_number + 1} 章${ch.title ? ` — ${ch.title}` : ""}`);
+      const chapterLabel = ch.chapter_number === 0
+        ? (ch.title || "序言")
+        : `第 ${ch.chapter_number} 章${ch.title ? ` — ${ch.title}` : ""}`;
+      parts.push(`### ${chapterLabel}`);
       parts.push(`情节点: ${ch.plot_events.join("；")}`);
       if (ch.characters_mentioned.length > 0) {
         parts.push(`出场角色: ${ch.characters_mentioned.join("、")}`);
