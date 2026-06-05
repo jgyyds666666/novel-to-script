@@ -89,7 +89,7 @@ export default function GeneratePage() {
 
   return (
     <main className="min-h-screen p-8">
-      <div className="mx-auto max-w-2xl space-y-8 pt-12">
+      <div className="mx-auto max-w-2xl space-y-8 pt-16">
         <div className="space-y-2 text-center">
           <h1 className="text-3xl font-bold tracking-tight">生成剧本</h1>
           <p className="text-muted-foreground">
@@ -122,7 +122,7 @@ export default function GeneratePage() {
           <div className="space-y-6">
             {/* Stats banner */}
             <div className="rounded-lg bg-muted/50 px-4 py-3 text-center">
-              <p className="text-sm font-medium text-green-600 dark:text-green-400">
+              <p className="text-sm font-medium text-success">
                 剧本生成完成
               </p>
               <p className="text-xs text-muted-foreground mt-0.5">
@@ -136,7 +136,7 @@ export default function GeneratePage() {
                 {(result.script.adaptation_report?.uncertainty_count ?? 0) > 0 && (
                   <>
                     <span className="mx-1.5">·</span>
-                    <span className="text-amber-500">
+                    <span className="text-warning">
                       {result.script.adaptation_report!.uncertainty_count} 处待确认
                     </span>
                   </>

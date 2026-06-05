@@ -4,48 +4,44 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-  }
+    /* Anthropic warm palette */
+    --background: 45 20% 97%;          /* #faf9f5 warm beige */
+    --foreground: 40 5% 8%;            /* #141413 dark brown-black */
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --card: 48 20% 88%;                /* #e8e6dc light warm gray */
+    --card-foreground: 40 5% 8%;
+
+    --popover: 45 20% 97%;
+    --popover-foreground: 40 5% 8%;
+
+    --primary: 12 60% 60%;             /* #d97757 warm orange */
+    --primary-foreground: 45 20% 97%;
+
+    --secondary: 48 20% 88%;           /* #e8e6dc */
+    --secondary-foreground: 40 5% 8%;
+
+    --muted: 48 20% 88%;               /* #e8e6dc */
+    --muted-foreground: 45 5% 68%;     /* #b0aea5 */
+
+    --accent: 210 45% 68%;             /* #6a9bcc soft blue */
+    --accent-foreground: 40 5% 8%;
+
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 45 20% 97%;
+
+    /* NEW: success — Anthropic tertiary green */
+    --success: 85 30% 50%;             /* #788c5d */
+    --success-foreground: 45 20% 97%;
+
+    /* NEW: warning — warm amber */
+    --warning: 42 65% 55%;
+    --warning-foreground: 40 5% 8%;
+
+    --border: 48 15% 85%;              /* #e2e0d6 */
+    --input: 48 15% 85%;
+    --ring: 12 60% 60%;                /* orange focus ring */
+
+    --radius: 0.5rem;
   }
 }
 
@@ -55,5 +51,30 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Anthropic typography: Poppins for headings, Lora for body */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading), system-ui, sans-serif;
+  }
+  body {
+    font-family: var(--font-body), Georgia, "Noto Serif SC", serif;
+  }
+}
+
+/* Entrance animation */
+@layer utilities {
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

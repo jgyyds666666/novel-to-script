@@ -1,4 +1,5 @@
 import type { ChapterSummary } from "@/lib/pipeline/types";
+import { Badge } from "@/components/ui/badge";
 
 interface ChapterCardProps {
   chapter: ChapterSummary;
@@ -33,12 +34,9 @@ export function ChapterCard({ chapter }: ChapterCardProps) {
       {chapter.characters_mentioned?.length > 0 && (
         <div className="flex flex-wrap gap-1">
           {chapter.characters_mentioned.map((name, i) => (
-            <span
-              key={i}
-              className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-xs text-primary"
-            >
+            <Badge key={i} variant="accent" className="text-xs">
               {name}
-            </span>
+            </Badge>
           ))}
         </div>
       )}

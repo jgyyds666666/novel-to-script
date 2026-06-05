@@ -7,6 +7,8 @@ import { FileDropZone } from "@/components/upload/file-drop-zone";
 import { ScriptTypeSelector } from "@/components/upload/script-type-selector";
 import { ApiKeyConfig } from "@/components/upload/api-key-config";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { STORAGE_KEYS, type UploadMeta } from "@/lib/parser";
 import type { ScriptType } from "@/lib/types";
 
@@ -78,13 +80,12 @@ export default function UploadPage() {
               剧本标题
               <span className="ml-1 text-xs text-muted-foreground font-normal">（可选，留空自动从文件名提取）</span>
             </label>
-            <input
+            <Input
               id="title"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="例：夺冠之路"
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
 
@@ -96,16 +97,16 @@ export default function UploadPage() {
             <label htmlFor="language" className="text-sm font-medium">
               原文语言
             </label>
-            <select
-              id="language"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <option value="zh-CN">中文（简体）</option>
-              <option value="zh-TW">中文（繁體）</option>
-              <option value="en">English</option>
-            </select>
+            <Select value={language} onValueChange={setLanguage}>
+              <SelectTrigger id="language">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="zh-CN">中文（简体）</SelectItem>
+                <SelectItem value="zh-TW">中文（繁體）</SelectItem>
+                <SelectItem value="en">English</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Submit */}

@@ -20,7 +20,7 @@ export function ApiKeyConfig() {
 
   if (!hasKey || isEditing) {
     return (
-      <div className={`rounded-lg border p-4 space-y-3 ${!hasKey ? "border-amber-300 bg-amber-50/50 dark:border-amber-900/50 dark:bg-amber-950/20" : ""}`}>
+      <div className={`rounded-lg border p-4 space-y-3 ${!hasKey ? "border-warning/40 bg-warning/5" : ""}`}>
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium">
             {hasKey ? "修改 API Key" : "配置 DeepSeek API Key"}
@@ -83,7 +83,7 @@ export function ApiKeyConfig() {
   return (
     <div className="flex items-center justify-between rounded-lg border px-4 py-2.5 bg-muted/30">
       <div className="flex items-center gap-2 text-sm">
-        <span className="h-2 w-2 rounded-full bg-green-500 flex-shrink-0" />
+        <span className="h-2 w-2 rounded-full bg-success flex-shrink-0" />
         <span className="text-muted-foreground text-xs">API Key</span>
         <span className="font-mono text-xs">{masked}</span>
       </div>

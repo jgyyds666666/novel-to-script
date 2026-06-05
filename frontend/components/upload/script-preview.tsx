@@ -113,14 +113,14 @@ function SummaryView({ script }: { script: Script }) {
 
       {/* Uncertainty flags */}
       {(report?.uncertainty_count ?? 0) > 0 && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50/50 dark:border-amber-900/50 dark:bg-amber-950/20 p-4 space-y-2">
-          <h4 className="text-sm font-medium text-amber-700 dark:text-amber-400">
+        <div className="rounded-lg border border-warning/30 bg-warning/5 p-4 space-y-2">
+          <h4 className="text-sm font-semibold text-warning">
             {report!.uncertainty_count} 处需人工确认
           </h4>
           <div className="space-y-1.5">
             {script.uncertainty_flags?.slice(0, 3).map((flag) => (
               <div key={flag.id} className="text-xs text-muted-foreground">
-                <span className={`inline-block mr-1 ${flag.severity === "high" ? "text-red-500" : flag.severity === "medium" ? "text-amber-500" : "text-muted-foreground"}`}>
+                <span className={`inline-block mr-1 ${flag.severity === "high" ? "text-destructive" : flag.severity === "medium" ? "text-warning" : "text-muted-foreground"}`}>
                   [{flag.severity}]
                 </span>
                 {flag.description}
