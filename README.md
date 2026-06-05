@@ -22,9 +22,16 @@
 
 | 模块 | 说明 |
 |------|------|
-| `lib/parser.ts` | 自研章节解析引擎，支持中英文章节标记正则匹配 |
-| `lib/generator.ts` | 自研剧本生成器，小说→结构化 Script 对象 |
-| `lib/types.ts` | 完整剧本 YAML Schema 的 TypeScript 类型定义 |
+| `frontend/lib/parser.ts` | 自研章节解析引擎，支持中英文章节标记正则匹配 |
+| `frontend/lib/types.ts` | 完整剧本 YAML Schema 的 TypeScript 类型定义 |
+| `frontend/lib/pipeline/ai-client.ts` | 自研 DeepSeek AI 调用封装，含重试/分块/Token 估算 |
+| `frontend/lib/pipeline/parse-stage.ts` | 自研 AI 分章解析阶段，逐章提取情节/对白/场景 |
+| `frontend/lib/pipeline/generate-stage.ts` | 自研 AI 剧本生成阶段，小说→结构化 Script 对象 |
+| `frontend/lib/pipeline/types.ts` | Pipeline 阶段类型定义（ChapterSummary、SSE 事件等） |
+| `frontend/app/api/pipeline/parse/route.ts` | SSE 流式分章 API，实时推送进度 |
+| `frontend/app/api/pipeline/generate/route.ts` | SSE 流式生成 API，实时推送进度 |
+| `frontend/hooks/use-sse-stream.ts` | 自研 SSE 流式进度 Hook，统一管理 loading/result/error |
+| `frontend/components/upload/progress-display.tsx` | 自研实时进度展示组件 |
 | `backend/src/pipeline/` | 自研四阶段处理管线（分章→聚合→生成→检查） |
 | `backend/src/export/fountain.ts` | 自研 YAML→Fountain 格式转换器 |
 | `docs/SCHEMA-RFC.md` | 自研剧本 YAML Schema 设计文档 |
@@ -38,7 +45,9 @@
 | next | ^15.0 | React 全栈框架，App Router |
 | react | ^19.0 | UI 框架 |
 | react-dom | ^19.0 | React DOM 渲染 |
+| openai | ^6.42 | DeepSeek API 调用（OpenAI 兼容接口） |
 | lucide-react | ^0.460 | 图标库 |
+| js-yaml | ^4.1 | 前端 YAML 序列化（剧本预览/下载） |
 | class-variance-authority | ^0.7 | 组件 variant 管理（shadcn/ui 依赖） |
 | clsx | ^2.1 | CSS 类名合并 |
 | tailwind-merge | ^2.6 | Tailwind 类名去重合并 |
@@ -84,19 +93,29 @@ novel-to-script/
 │   │   ├── page.tsx             # 首页
 │   │   ├── layout.tsx           # 根布局
 │   │   ├── globals.css          # 全局样式 + shadcn/ui 主题
-│   │   └── upload/
-│   │       ├── page.tsx         # 小说上传页
-│   │       ├── parsing/page.tsx # 分章解析页
-│   │       └── generate/page.tsx# 剧本生成页
+│   │   ├── upload/
+│   │   │   ├── page.tsx         # 小说上传页
+│   │   │   ├── parsing/page.tsx # 分章解析页（SSE 流式）
+│   │   │   └── generate/page.tsx# 剧本生成页（SSE 流式）
+│   │   └── api/pipeline/
+│   │       ├── parse/route.ts   # AI 分章 API（SSE）
+│   │       └── generate/route.ts# AI 生成 API（SSE）
 │   ├── components/
 │   │   ├── ui/                  # shadcn/ui 基础组件
-│   │   └── upload/              # 上传流程组件
+│   │   └── upload/              # 上传流程组件（含 progress-display）
+│   ├── hooks/
+│   │   └── use-sse-stream.ts    # SSE 流式进度 Hook
 │   ├── lib/
 │   │   ├── types.ts             # Schema 类型定义
-│   │   ├── parser.ts            # 章节解析引擎
-│   │   ├── generator.ts         # 剧本生成器
+│   │   ├── parser.ts            # 章节解析引擎（向后兼容）
 │   │   ├── constants.ts         # 常量
-│   │   └── utils.ts             # 工具函数
+│   │   ├── utils.ts             # 工具函数
+│   │   └── pipeline/            # AI 管线核心
+│   │       ├── ai-client.ts     # DeepSeek 客户端封装
+│   │       ├── parse-stage.ts   # 分章解析阶段
+│   │       ├── generate-stage.ts# 剧本生成阶段
+│   │       ├── prompts.ts       # AI Prompt 模板
+│   │       └── types.ts         # 管线类型定义
 │   └── package.json
 ├── backend/                     # 独立 AI 处理管线
 │   ├── src/
@@ -112,6 +131,7 @@ novel-to-script/
 │   └── package.json
 ├── docs/
 │   └── SCHEMA-RFC.md            # YAML Schema 设计文档
+├── .env.local.example           # API Key 配置示例
 ├── PROJECT_STATUS.md            # 项目进度追踪
 └── README.md
 ```
@@ -133,4 +153,4 @@ novel-to-script/
 
 ---
 
-> **当前状态**：MVP 第一轮已完成（上传 → 分章 → 生成 → 下载），第二轮 AI 深化进行中。
+> **当前状态**：MVP 第二轮已完成（DeepSeek AI 真实接入，SSE 流式进度，分章解析 + 剧本生成全链路可用），demo 视频录制中。

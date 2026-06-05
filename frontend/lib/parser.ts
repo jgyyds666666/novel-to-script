@@ -1,6 +1,7 @@
 // ============================================================
 // Client-side Chapter Parser (MVP — regex-based)
-// Real AI parsing will replace this in round 2
+// @deprecated Use AI pipeline at /api/pipeline/parse instead.
+//   Kept for backward compatibility and type exports.
 // ============================================================
 
 export interface ParsedChapter {
@@ -22,6 +23,7 @@ export interface ParseResult {
 /**
  * Split novel text into chapters using regex pattern matching.
  * Supports Chinese (第X章) and English (Chapter X) markers.
+ * @deprecated Use AI-powered apiParseChapters via /api/pipeline/parse instead.
  */
 export function parseChapters(text: string): ParseResult {
   if (!text.trim()) {

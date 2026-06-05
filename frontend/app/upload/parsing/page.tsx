@@ -1,11 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { StepsIndicator } from "@/components/upload/steps-indicator";
 import { ChapterCard } from "@/components/upload/chapter-card";
+import { ProgressDisplay } from "@/components/upload/progress-display";
 import { Button } from "@/components/ui/button";
-import { parseChapters, STORAGE_KEYS, type UploadMeta, type ParseResult } from "@/lib/parser";
+import { STORAGE_KEYS, type UploadMeta } from "@/lib/parser";
+import { useSSEStream } from "@/hooks/use-sse-stream";
+import type { ChapterSummary } from "@/lib/pipeline/types";
 
 const STEPS = [
   { label: "上传小说", description: "上传纯文本文件" },
@@ -14,13 +17,23 @@ const STEPS = [
   { label: "导出", description: "下载 YAML / Fountain" },
 ];
 
+interface ParseResult {
+  chapters: ChapterSummary[];
+}
+
 export default function ParsingPage() {
   const router = useRouter();
   const [meta, setMeta] = useState<UploadMeta | null>(null);
-  const [result, setResult] = useState<ParseResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const hasStarted = useRef(false);
+
+  const { status, progress, result, error: streamError, start } =
+    useSSEStream<ParseResult>();
 
   useEffect(() => {
+    if (hasStarted.current) return;
+    hasStarted.current = true;
+
     const text = sessionStorage.getItem(STORAGE_KEYS.NOVEL_TEXT);
     const metaStr = sessionStorage.getItem(STORAGE_KEYS.NOVEL_META);
 
@@ -29,35 +42,34 @@ export default function ParsingPage() {
       return;
     }
 
-    try {
-      setMeta(JSON.parse(metaStr));
-      const parsed = parseChapters(text);
-      // Artificial delay to show the parsing step (will be real AI latency in round 2)
-      setTimeout(() => setResult(parsed), 300);
-    } catch {
-      setError("文本解析失败，请检查文件编码后重试。");
-    }
-  }, []);
+    const parsedMeta: UploadMeta = JSON.parse(metaStr);
+    setMeta(parsedMeta);
+
+    // Start AI parsing via SSE
+    start("/api/pipeline/parse", {
+      text,
+      language: parsedMeta.language || "zh-CN",
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleBack = () => {
     router.push("/upload");
   };
 
   const handleConfirm = () => {
-    // MVP: store parse result and proceed to generation
-    if (result) {
+    if (result?.chapters) {
+      // Store full ChapterSummary[] in sessionStorage for the generate page
       sessionStorage.setItem(
         "novel-to-script:chapters",
-        JSON.stringify(result.chapters.map((ch) => ({
-          index: ch.index,
-          title: ch.title,
-          paragraphCount: ch.paragraphCount,
-          charCount: ch.charCount,
-        })))
+        JSON.stringify(result.chapters)
       );
     }
     router.push("/upload/generate");
   };
+
+  const isLoading = status === "loading";
+  const hasResult = status === "done" && result?.chapters;
+  const displayError = error || streamError;
 
   return (
     <main className="min-h-screen p-8">
@@ -65,48 +77,61 @@ export default function ParsingPage() {
         <div className="space-y-2 text-center">
           <h1 className="text-3xl font-bold tracking-tight">分章解析</h1>
           <p className="text-muted-foreground">
-            AI 自动识别章节结构
+            AI 自动识别章节结构，提取情节点与角色
           </p>
         </div>
 
         <StepsIndicator steps={STEPS} currentStep={1} />
 
-        {error && (
+        {displayError && (
           <div className="rounded-lg border border-destructive/50 bg-destructive/5 p-6 text-center space-y-4">
-            <p className="text-sm text-destructive">{error}</p>
+            <p className="text-sm text-destructive">{displayError}</p>
             <Button variant="outline" onClick={handleBack}>
               返回上传
             </Button>
           </div>
         )}
 
-        {!error && !result && (
-          <div className="flex flex-col items-center gap-4 py-16">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-            <p className="text-sm text-muted-foreground">正在解析章节结构...</p>
-          </div>
+        {!displayError && isLoading && (
+          <ProgressDisplay
+            progress={progress}
+            isActive={isLoading}
+          />
         )}
 
-        {result && meta && (
+        {hasResult && meta && (
           <div className="space-y-6">
             {/* Summary */}
             <div className="flex items-center justify-between rounded-lg bg-muted/50 px-4 py-3">
               <div className="text-sm">
                 <span className="font-medium">{meta.fileName}</span>
                 <span className="text-muted-foreground ml-2">
-                  {result.totalChars.toLocaleString()} 字
+                  {result.chapters.length} 个章节
                 </span>
               </div>
               <div className="flex gap-4 text-xs text-muted-foreground">
-                <span>{result.chapters.length} 个章节</span>
-                <span>{result.totalParagraphs} 段</span>
+                <span>
+                  共{" "}
+                  {result.chapters.reduce(
+                    (s, c) => s + c.dialogue_segments.length,
+                    0
+                  )}{" "}
+                  句对白
+                </span>
+                <span>
+                  {result.chapters.reduce(
+                    (s, c) => s + c.characters_mentioned.length,
+                    0
+                  )}{" "}
+                  次角色提及
+                </span>
               </div>
             </div>
 
             {/* Chapter List */}
             <div className="space-y-2">
               <h2 className="text-sm font-medium">
-                识别到 {result.chapters.length} 个章节
+                AI 解析完成，共 {result.chapters.length} 个章节
               </h2>
               <div className="max-h-[50vh] overflow-y-auto space-y-2 pr-1">
                 {result.chapters.map((chapter, idx) => (
