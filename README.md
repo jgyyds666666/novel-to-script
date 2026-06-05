@@ -5,7 +5,7 @@
 
 ## 🎬 Demo 视频
 
-> [待录制] 将在第二轮 AI 深化完成后录制
+> [待录制] AI 全链路已就绪，即将录制实际运行演示（含语音讲解）并上传 B 站
 
 ## ✨ 核心功能
 
@@ -35,6 +35,7 @@
 | `backend/src/pipeline/` | 自研四阶段处理管线（分章→聚合→生成→检查） |
 | `backend/src/export/fountain.ts` | 自研 YAML→Fountain 格式转换器 |
 | `docs/SCHEMA-RFC.md` | 自研剧本 YAML Schema 设计文档 |
+| `frontend/app/docs/schema/page.tsx` | Schema 在线参考页，渲染 SCHEMA-RFC.md 为可读 HTML |
 
 ### 第三方依赖
 
@@ -90,9 +91,11 @@ npm run build        # 编译 TypeScript
 novel-to-script/
 ├── frontend/                    # Next.js 全栈应用（UI + API Routes）
 │   ├── app/
-│   │   ├── page.tsx             # 首页
+│   │   ├── page.tsx             # 首页（开始转换 / 查看 Schema）
 │   │   ├── layout.tsx           # 根布局
 │   │   ├── globals.css          # 全局样式 + shadcn/ui 主题
+│   │   ├── docs/
+│   │   │   └── schema/page.tsx  # Schema 在线参考文档
 │   │   ├── upload/
 │   │   │   ├── page.tsx         # 小说上传页
 │   │   │   ├── parsing/page.tsx # 分章解析页（SSE 流式）
@@ -153,4 +156,5 @@ novel-to-script/
 
 ---
 
-> **当前状态**：MVP 第二轮已完成（DeepSeek AI 真实接入，SSE 流式进度，分章解析 + 剧本生成全链路可用），demo 视频录制中。
+> **当前状态**：第二轮已完成（DeepSeek AI 真实接入，SSE 流式进度，API Key UI 配置，Schema 在线文档，剧本预览三 Tab），Demo 视频待录制。
+
