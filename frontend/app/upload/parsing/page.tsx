@@ -8,6 +8,7 @@ import { ProgressDisplay } from "@/components/upload/progress-display";
 import { Button } from "@/components/ui/button";
 import { STORAGE_KEYS, type UploadMeta } from "@/lib/parser";
 import { useSSEStream } from "@/hooks/use-sse-stream";
+import { useApiKey } from "@/hooks/use-api-key";
 import type { ChapterSummary } from "@/lib/pipeline/types";
 
 const STEPS = [
@@ -26,6 +27,7 @@ export default function ParsingPage() {
   const [meta, setMeta] = useState<UploadMeta | null>(null);
   const [error, setError] = useState<string | null>(null);
   const hasStarted = useRef(false);
+  const { apiKey } = useApiKey();
 
   const { status, progress, result, error: streamError, start } =
     useSSEStream<ParseResult>();
@@ -45,20 +47,17 @@ export default function ParsingPage() {
     const parsedMeta: UploadMeta = JSON.parse(metaStr);
     setMeta(parsedMeta);
 
-    // Start AI parsing via SSE
     start("/api/pipeline/parse", {
       text,
       language: parsedMeta.language || "zh-CN",
+      apiKey: apiKey || undefined,
     });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [apiKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleBack = () => {
-    router.push("/upload");
-  };
+  const handleBack = () => router.push("/upload");
 
   const handleConfirm = () => {
     if (result?.chapters) {
-      // Store full ChapterSummary[] in sessionStorage for the generate page
       sessionStorage.setItem(
         "novel-to-script:chapters",
         JSON.stringify(result.chapters)
@@ -85,7 +84,8 @@ export default function ParsingPage() {
 
         {displayError && (
           <div className="rounded-lg border border-destructive/50 bg-destructive/5 p-6 text-center space-y-4">
-            <p className="text-sm text-destructive">{displayError}</p>
+            <p className="text-sm text-destructive font-medium">解析失败</p>
+            <p className="text-xs text-muted-foreground">{displayError}</p>
             <Button variant="outline" onClick={handleBack}>
               返回上传
             </Button>
@@ -93,15 +93,12 @@ export default function ParsingPage() {
         )}
 
         {!displayError && isLoading && (
-          <ProgressDisplay
-            progress={progress}
-            isActive={isLoading}
-          />
+          <ProgressDisplay progress={progress} isActive={isLoading} />
         )}
 
         {hasResult && meta && (
           <div className="space-y-6">
-            {/* Summary */}
+            {/* Summary bar */}
             <div className="flex items-center justify-between rounded-lg bg-muted/50 px-4 py-3">
               <div className="text-sm">
                 <span className="font-medium">{meta.fileName}</span>
@@ -128,9 +125,9 @@ export default function ParsingPage() {
               </div>
             </div>
 
-            {/* Chapter List */}
+            {/* Chapter list */}
             <div className="space-y-2">
-              <h2 className="text-sm font-medium">
+              <h2 className="text-sm font-medium text-muted-foreground">
                 AI 解析完成，共 {result.chapters.length} 个章节
               </h2>
               <div className="max-h-[50vh] overflow-y-auto space-y-2 pr-1">
@@ -143,10 +140,10 @@ export default function ParsingPage() {
             {/* Actions */}
             <div className="flex justify-between pt-4">
               <Button variant="outline" onClick={handleBack}>
-                返回修改
+                ← 返回修改
               </Button>
               <Button onClick={handleConfirm}>
-                确认，生成剧本
+                确认，生成剧本 →
               </Button>
             </div>
           </div>

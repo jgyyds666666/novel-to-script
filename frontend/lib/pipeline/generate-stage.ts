@@ -47,7 +47,8 @@ async function generateScenesForBatch(
   batchIndex: number,
   totalBatches: number,
   scriptType: string,
-  language: string
+  language: string,
+  apiKey?: string
 ): Promise<AIGenerationResult> {
   // Build context from chapter summaries
   const chapterContext = batch
@@ -96,6 +97,7 @@ async function generateScenesForBatch(
     userMessage,
     outputIsJson: true,
     maxTokens: 32000,
+    apiKey,
   });
 }
 
@@ -195,6 +197,7 @@ export interface GenerateOptions {
   title: string;
   language: string;
   fileName?: string;
+  apiKey?: string;
 }
 
 /**
@@ -244,7 +247,8 @@ export async function aiGenerateScript(
       b,
       batches.length,
       options.scriptType,
-      options.language
+      options.language,
+      options.apiKey
     );
     allResults.push(result);
   }
