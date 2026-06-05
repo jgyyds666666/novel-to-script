@@ -54,6 +54,7 @@
 | tailwind-merge | ^2.6 | Tailwind 类名去重合并 |
 | tailwindcss-animate | ^1.0 | Tailwind 动画插件 |
 | tailwindcss | ^3.4 | CSS 原子化框架 |
+| shadcn/ui | latest | UI 组件库（button, card, tabs, select, input, textarea, badge, progress） |
 | typescript | ^5.7 | 类型系统 |
 
 #### 后端 (backend/)
