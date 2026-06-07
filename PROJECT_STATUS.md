@@ -56,8 +56,8 @@
 
 | 功能 | 状态 | 说明 |
 |------|------|------|
-| 比赛合规整改 | ✅ done | `main` | Git 配置统一 + CLAUDE.md PR 工作流规则 + 合规自检 |
-| Fountain 导出 UI | ⬜ | 前端接入 Fountain 格式下载 |
+| 比赛合规整改 | ✅ done | `docs/compliance-fixes` (PR #4) | Git 配置统一 + CLAUDE.md PR 工作流规则 + 合规自检 |
+| Fountain 导出 UI | ✅ done | `feat/fountain-export` (PR #5) | 前端接入 Fountain 格式下载，可导入 Final Draft / Fade In |
 | 分镜脚本扩展 | ⬜ | 可选 shot 块生成 |
 | UI 打磨 | ⬜ | 加载骨架屏/暗色模式/响应式优化 |
 | 🎬 Demo 视频 | ✅ done | `main` | [B 站链接](https://www.bilibili.com/video/BV1vw7y6hEME/) — 全链路演示含人声讲解 |
