@@ -5,8 +5,8 @@ export default function Home() {
   return (
     <main>
       {/* Hero — dark section */}
-      <section className="bg-[#141413] text-[#faf9f5] py-32 px-8">
-        <div className="max-w-[960px] mx-auto text-center space-y-6">
+      <section className="bg-[#141413] text-[#faf9f5] py-16 md:py-32 px-4 md:px-8">
+        <div className="max-w-[960px] mx-auto text-center space-y-4 md:space-y-6">
           {/* Decorative rule */}
           <div className="flex items-center justify-center gap-3 pb-2">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-primary/60" />
@@ -24,7 +24,7 @@ export default function Home() {
           </h1>
 
           <p
-            className="text-lg text-[#b0aea5] max-w-xl mx-auto animate-fade-in-up"
+            className="text-base md:text-lg text-[#b0aea5] max-w-xl mx-auto animate-fade-in-up"
             style={{ animationDelay: "150ms" }}
           >
             AI 深度改写 —— 从小说叙事到视听语言，
@@ -32,7 +32,7 @@ export default function Home() {
           </p>
 
           <div
-            className="flex gap-4 justify-center pt-4 animate-fade-in-up"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 animate-fade-in-up"
             style={{ animationDelay: "300ms" }}
           >
             <Link
@@ -53,11 +53,11 @@ export default function Home() {
       </section>
 
       {/* Features — light section */}
-      <section className="bg-background py-24 px-8">
-        <div className="max-w-[960px] mx-auto space-y-16">
+      <section className="bg-background py-16 md:py-24 px-4 md:px-8">
+        <div className="max-w-[960px] mx-auto space-y-10 md:space-y-16">
           <div className="text-center space-y-3">
             <h2
-              className="text-3xl font-bold tracking-tight"
+              className="text-2xl md:text-3xl font-bold tracking-tight"
               style={{ fontFamily: "var(--font-heading), system-ui, sans-serif" }}
             >
               三种格式，一键生成
@@ -87,7 +87,7 @@ export default function Home() {
             ].map(({ icon: Icon, title, desc }) => (
               <div
                 key={title}
-                className="group rounded-xl border border-border bg-card p-8 text-center space-y-4 transition-all duration-200 hover:border-primary/30 hover:shadow-sm"
+                className="group rounded-xl border border-border bg-card p-5 md:p-8 text-center space-y-3 md:space-y-4 transition-all duration-200 hover:border-primary/30 hover:shadow-sm"
               >
                 <div className="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-primary/10">
                   <Icon className="h-6 w-6 text-primary" />
@@ -106,7 +106,7 @@ export default function Home() {
       </section>
 
       {/* Footer hint */}
-      <div className="text-center pb-16">
+      <div className="text-center pb-8 md:pb-16">
         <p className="text-xs text-muted-foreground">
           AI 小说转剧本工具 · DeepSeek 驱动 · 开源项目
         </p>

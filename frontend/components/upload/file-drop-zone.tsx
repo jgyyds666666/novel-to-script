@@ -70,7 +70,7 @@ export function FileDropZone({
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
         className={cn(
-          "flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-12 transition-all duration-200 cursor-pointer",
+          "flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 md:p-12 transition-all duration-200 cursor-pointer",
           isDragging
             ? "border-primary bg-primary/5"
             : "border-border hover:border-muted-foreground/40",

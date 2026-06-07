@@ -72,8 +72,8 @@ export default function ParsingPage() {
   const displayError = error || streamError;
 
   return (
-    <main className="min-h-screen p-8">
-      <div className="mx-auto max-w-2xl space-y-8 pt-16">
+    <main className="min-h-screen p-3 md:p-8">
+      <div className="mx-auto max-w-2xl space-y-6 md:space-y-8 pt-8 md:pt-16">
         <div className="space-y-2 text-center">
           <h1 className="text-3xl font-bold tracking-tight">分章解析</h1>
           <p className="text-muted-foreground">

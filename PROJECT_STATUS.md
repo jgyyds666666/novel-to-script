@@ -59,9 +59,9 @@
 | 比赛合规整改 | ✅ done | `docs/compliance-fixes` (PR #4) | Git 配置统一 + CLAUDE.md PR 工作流规则 + 合规自检 |
 | Fountain 导出 UI | ✅ done | `feat/fountain-export` (PR #5) | 前端接入 Fountain 格式下载，可导入 Final Draft / Fade In |
 | 骨架屏加载 | ✅ done | `feat/skeleton-loading` (PR #6) | 分章解析 + 剧本生成页骨架屏，提升 AI 等待体验 |
-| 暗色模式 | ✅ done | `feat/dark-mode` | Tailwind class 策略 + Anthropic 暖暗色调 + FOUC 防护 |
+| 暗色模式 | ✅ done | `feat/dark-mode` (PR #7) | Tailwind class 策略 + Anthropic 暖暗色调 + FOUC 防护 |
+| 响应式优化 | ✅ done | `feat/responsive-optimization` | 首页 + 全上传流程移动端适配 |
 | 分镜脚本扩展 | ⬜ | 可选 shot 块生成 |
-| UI 打磨 | ⬜ | 加载骨架屏/暗色模式/响应式优化 |
 | 🎬 Demo 视频 | ✅ done | `main` | [B 站链接](https://www.bilibili.com/video/BV1vw7y6hEME/) — 全链路演示含人声讲解 |
 | README 补全 | ✅ done | `main` | 汇总 Demo 链接、依赖表、目录结构 |
 
