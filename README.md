@@ -54,6 +54,8 @@
 | react-dom | ^19.0 | React DOM 渲染 |
 | openai | ^6.42 | DeepSeek API 调用（OpenAI 兼容接口） |
 | lucide-react | ^0.460 | 图标库 |
+| @fontsource/poppins | latest | Poppins 字体自托管（标题） |
+| @fontsource/lora | latest | Lora 字体自托管（正文） |
 | js-yaml | ^4.1 | 前端 YAML 序列化（剧本预览/下载） |
 | class-variance-authority | ^0.7 | 组件 variant 管理（shadcn/ui 依赖） |
 | clsx | ^2.1 | CSS 类名合并 |

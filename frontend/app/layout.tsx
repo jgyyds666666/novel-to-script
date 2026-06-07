@@ -1,20 +1,26 @@
 import type { Metadata } from "next";
-import { Poppins, Lora } from "next/font/google";
+import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { ThemeScript } from "@/components/theme/theme-script";
 import "./globals.css";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
+const poppins = localFont({
+  src: [
+    { path: "../node_modules/@fontsource/poppins/files/poppins-latin-600-normal.woff2", weight: "600" },
+    { path: "../node_modules/@fontsource/poppins/files/poppins-latin-700-normal.woff2", weight: "700" },
+    { path: "../node_modules/@fontsource/poppins/files/poppins-latin-800-normal.woff2", weight: "800" },
+  ],
   variable: "--font-heading",
   display: "swap",
 });
 
-const lora = Lora({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+const lora = localFont({
+  src: [
+    { path: "../node_modules/@fontsource/lora/files/lora-latin-400-normal.woff2", weight: "400" },
+    { path: "../node_modules/@fontsource/lora/files/lora-latin-500-normal.woff2", weight: "500" },
+    { path: "../node_modules/@fontsource/lora/files/lora-latin-600-normal.woff2", weight: "600" },
+  ],
   variable: "--font-body",
   display: "swap",
 });
