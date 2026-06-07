@@ -3,3 +3,4 @@ export { FileDropZone } from "./file-drop-zone";
 export { ScriptTypeSelector } from "./script-type-selector";
 export { ChapterCard } from "./chapter-card";
 export { ScriptPreview } from "./script-preview";
+export { ParsingSkeleton, GenerateSkeleton } from "./loading-skeleton";
