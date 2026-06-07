@@ -15,6 +15,8 @@
 - **剧本自动生成**：AI 将小说叙述转化为可拍摄的剧本场景（动作描述 + 对白 + 转场）
 - **结构化输出**：YAML 格式剧本，符合自定义 Schema（详见 `docs/SCHEMA-RFC.md`）
 - **多格式导出**：YAML 下载 + Fountain 格式（可导入 Final Draft、Fade In 等）
+- **分镜脚本模式**：可选启用，AI 为每个场景生成镜头指示（景别、拍摄对象、机位）
+- **暗色模式**：Anthropic 暖暗色调主题，一键切换，跟随系统偏好
 - **原著对照回溯**：每条剧本内容标注对应的原文章节段落
 
 ## 🧱 技术栈与依赖
@@ -32,7 +34,10 @@
 | `frontend/app/api/pipeline/parse/route.ts` | SSE 流式分章 API，实时推送进度 |
 | `frontend/app/api/pipeline/generate/route.ts` | SSE 流式生成 API，实时推送进度 |
 | `frontend/hooks/use-sse-stream.ts` | 自研 SSE 流式进度 Hook，统一管理 loading/result/error |
+| `frontend/lib/fountain.ts` | 自研 Fountain 格式转换器，支持 6 种内容块渲染 |
 | `frontend/components/upload/progress-display.tsx` | 自研实时进度展示组件 |
+| `frontend/components/upload/loading-skeleton.tsx` | 自研骨架屏加载状态组件 |
+| `frontend/components/theme/` | 自研暗色模式系统（Provider + Toggle + FOUC 防护） |
 | `backend/src/pipeline/` | 自研四阶段处理管线（分章→聚合→生成→检查） |
 | `backend/src/export/fountain.ts` | 自研 YAML→Fountain 格式转换器 |
 | `docs/SCHEMA-RFC.md` | 自研剧本 YAML Schema 设计文档 |
@@ -158,5 +163,5 @@ novel-to-script/
 
 ---
 
-> **当前状态**：第三轮进行中 — 第二轮 DeepSeek AI 全链路已完成（SSE 流式进度、API Key UI 配置、Anthropic 设计系统、剧本预览三 Tab）、Demo 视频已上传 B 站、比赛合规自检通过。正在推进：Fountain 格式导出 + UI 打磨。
+> **当前状态**：三轮全部完成 — DeepSeek AI 全链路（SSE 流式、Anthropic 设计系统、暗色模式、响应式、骨架屏）、多格式导出（YAML + Fountain）、分镜脚本模式、Demo 视频已上传 B 站。比赛合规自检通过，6 个合规 PR 已合并。
 

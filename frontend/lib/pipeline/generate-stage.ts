@@ -48,6 +48,7 @@ async function generateScenesForBatch(
   totalBatches: number,
   scriptType: string,
   language: string,
+  enableShots: boolean,
   apiKey?: string
 ): Promise<AIGenerationResult> {
   // Build context from chapter summaries
@@ -84,11 +85,19 @@ async function generateScenesForBatch(
     })
     .join("\n\n---\n\n");
 
+  const shotInstruction = enableShots
+    ? [
+        "",
+        "【分镜模式】请为每个场景的关键时刻添加 shot 类型的内容块，指定景别（CLOSE UP / MEDIUM SHOT / WIDE SHOT / LONG SHOT）、拍摄对象和镜头描述。每个场景至少 1-2 个 shot 块。",
+      ].join("\n")
+    : "";
+
   const userMessage = [
     `请将以下小说章节改编为剧本格式（第 ${batchIndex + 1}/${totalBatches} 批）：`,
     "",
     `目标类型: ${scriptType}`,
     `语言: ${language}`,
+    shotInstruction,
     "",
     chapterContext,
     "",
@@ -200,6 +209,7 @@ export interface GenerateOptions {
   title: string;
   language: string;
   fileName?: string;
+  enableShots?: boolean;
   apiKey?: string;
 }
 
@@ -251,6 +261,7 @@ export async function aiGenerateScript(
       batches.length,
       options.scriptType,
       options.language,
+      options.enableShots || false,
       options.apiKey
     );
     allResults.push(result);

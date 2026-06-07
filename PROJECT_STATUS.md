@@ -7,7 +7,7 @@
 
 - **第一轮**: MVP 最简实现（正则分章 + 模板生成，端到端跑通）
 - **第二轮**: 接入真实 AI 管线（DeepSeek + SSE 流式 + 剧本预览优化）
-- **第三轮**: 导出深化（Fountain UI 集成）+ 体验打磨 + Demo 视频
+- **第三轮**: 导出深化（Fountain UI 集成）+ 体验打磨 + Demo 视频 ✅ 已完成
 
 ## 进度
 
@@ -60,8 +60,8 @@
 | Fountain 导出 UI | ✅ done | `feat/fountain-export` (PR #5) | 前端接入 Fountain 格式下载，可导入 Final Draft / Fade In |
 | 骨架屏加载 | ✅ done | `feat/skeleton-loading` (PR #6) | 分章解析 + 剧本生成页骨架屏，提升 AI 等待体验 |
 | 暗色模式 | ✅ done | `feat/dark-mode` (PR #7) | Tailwind class 策略 + Anthropic 暖暗色调 + FOUC 防护 |
-| 响应式优化 | ✅ done | `feat/responsive-optimization` | 首页 + 全上传流程移动端适配 |
-| 分镜脚本扩展 | ⬜ | 可选 shot 块生成 |
+| 响应式优化 | ✅ done | `feat/responsive-optimization` (PR #8) | 首页 + 全上传流程移动端适配 |
+| 分镜脚本模式 | ✅ done | `feat/shot-script-mode` | 上传页可选开关，AI 为每个场景生成镜头指示 |
 | 🎬 Demo 视频 | ✅ done | `main` | [B 站链接](https://www.bilibili.com/video/BV1vw7y6hEME/) — 全链路演示含人声讲解 |
 | README 补全 | ✅ done | `main` | 汇总 Demo 链接、依赖表、目录结构 |
 

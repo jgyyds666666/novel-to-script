@@ -68,6 +68,7 @@ export default function GeneratePage() {
         title: parsedMeta.title,
         language: parsedMeta.language || "zh-CN",
         fileName: parsedMeta.fileName,
+        enableShots: parsedMeta.enableShots || false,
         apiKey: apiKey || undefined,
       });
     } catch {

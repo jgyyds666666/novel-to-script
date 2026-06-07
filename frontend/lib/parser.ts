@@ -116,4 +116,5 @@ export interface UploadMeta {
   scriptType: string;
   language: string;
   title: string;
+  enableShots?: boolean;
 }

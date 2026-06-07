@@ -25,6 +25,7 @@ export default function UploadPage() {
   const [scriptType, setScriptType] = useState<ScriptType | null>(null);
   const [language, setLanguage] = useState<string>("zh-CN");
   const [title, setTitle] = useState("");
+  const [enableShots, setEnableShots] = useState(false);
   const [isReading, setIsReading] = useState(false);
 
   const canProceed = file && scriptType && !isReading;
@@ -45,6 +46,7 @@ export default function UploadPage() {
         scriptType: scriptType!,
         language,
         title: title || file.name.replace(/\.\w+$/, ""),
+        enableShots,
       };
       sessionStorage.setItem(STORAGE_KEYS.NOVEL_META, JSON.stringify(meta));
 
@@ -91,6 +93,22 @@ export default function UploadPage() {
 
           {/* Script Type */}
           <ScriptTypeSelector value={scriptType} onChange={setScriptType} />
+
+          {/* Shot Script Mode Toggle */}
+          <label className="flex items-center gap-3 rounded-lg border p-4 cursor-pointer hover:bg-muted/50 transition-colors">
+            <input
+              type="checkbox"
+              checked={enableShots}
+              onChange={(e) => setEnableShots(e.target.checked)}
+              className="h-4 w-4 rounded border-border accent-primary"
+            />
+            <div className="space-y-0.5">
+              <span className="text-sm font-medium">🎬 分镜脚本模式</span>
+              <p className="text-xs text-muted-foreground">
+                启用后 AI 将为每个场景生成镜头指示（景别、拍摄对象、机位建议）
+              </p>
+            </div>
+          </label>
 
           {/* Language */}
           <div className="space-y-2">
