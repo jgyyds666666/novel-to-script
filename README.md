@@ -158,5 +158,5 @@ novel-to-script/
 
 ---
 
-> **当前状态**：第二轮已完成（DeepSeek AI 真实接入，SSE 流式进度，API Key UI 配置，Schema 在线文档，剧本预览三 Tab），Demo 视频已录制并上传 B 站。
+> **当前状态**：第三轮进行中 — 第二轮 DeepSeek AI 全链路已完成（SSE 流式进度、API Key UI 配置、Anthropic 设计系统、剧本预览三 Tab）、Demo 视频已上传 B 站、比赛合规自检通过。正在推进：Fountain 格式导出 + UI 打磨。
 

@@ -125,6 +125,31 @@ The skill enforces:
 - Commit timestamps must fall within the competition window (2026-06-05 ~ 2026-06-08)
 - README must be complete with dependency table and demo video link
 
+### Feature Branch + PR Workflow (MANDATORY — COMPETITION RULE)
+
+**NEVER commit directly to `main`.** Every change, no matter how small, MUST go through:
+
+```
+feature branch → commits on branch → push → create PR → merge PR
+```
+
+This is non-negotiable for competition compliance:
+- ❌ Forbidden: `git commit` on `main` branch directly
+- ❌ Forbidden: `git push` to `main` (only PR merges update main)
+- ✅ Required: Create a feature branch for EVERY change
+- ✅ Required: Every feature branch must have a corresponding PR with full description
+- ✅ Required: PR title and body MUST follow the competition template (see Section 2.2 in competition-submit skill)
+- ✅ Required: A single PR MUST only address ONE feature or ONE fix
+
+**Before starting any work:**
+1. `git checkout main && git pull origin main`
+2. `git checkout -b feat/<feature-name>` or `fix/<bug-name>`
+3. Work, commit, push to the feature branch
+4. Create a PR via Gitee API with full description
+5. Merge the PR (do NOT fast-forward merge locally)
+
+**Even for trivial changes** (typo fixes, doc updates, config tweaks), create a branch and PR — the competition judges look for sustained PR activity, not commit count.
+
 ### Auto-Update PROJECT_STATUS.md + README.md (MANDATORY)
 
 After completing any feature, bug fix, or significant change:
