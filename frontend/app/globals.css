@@ -43,6 +43,43 @@
 
     --radius: 0.5rem;
   }
+
+  .dark {
+    /* Anthropic dark palette — warm, low-contrast, readable */
+    --background: 40 8% 6%;              /* #100e0c deep warm black */
+    --foreground: 42 20% 92%;            /* #f0ede6 light warm beige */
+
+    --card: 40 6% 10%;                   /* #1a1815 */
+    --card-foreground: 42 20% 92%;
+
+    --popover: 40 6% 10%;
+    --popover-foreground: 42 20% 92%;
+
+    --primary: 12 55% 58%;               /* warm orange — slightly muted for dark */
+    --primary-foreground: 40 8% 6%;
+
+    --secondary: 40 6% 14%;              /* #24211c */
+    --secondary-foreground: 42 20% 92%;
+
+    --muted: 40 6% 14%;                  /* #24211c */
+    --muted-foreground: 40 8% 55%;       /* #99928a */
+
+    --accent: 210 40% 52%;               /* soft blue — adjusted for dark */
+    --accent-foreground: 42 20% 92%;
+
+    --destructive: 0 55% 48%;
+    --destructive-foreground: 42 20% 92%;
+
+    --success: 85 25% 45%;
+    --success-foreground: 42 20% 92%;
+
+    --warning: 42 60% 50%;
+    --warning-foreground: 40 8% 6%;
+
+    --border: 40 6% 18%;                 /* #2c2924 subtle warm border */
+    --input: 40 6% 18%;
+    --ring: 12 55% 58%;                  /* orange focus ring */
+  }
 }
 
 @layer base {

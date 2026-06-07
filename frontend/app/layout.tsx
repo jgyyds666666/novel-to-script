@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins, Lora } from "next/font/google";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { ThemeScript } from "@/components/theme/theme-script";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -27,8 +30,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className={`${poppins.variable} ${lora.variable}`}>
-      <body className="min-h-screen antialiased">{children}</body>
+    <html lang="zh-CN" className={`${poppins.variable} ${lora.variable}`} suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
+      <body className="min-h-screen antialiased">
+        <ThemeProvider>
+          {/* Fixed theme toggle */}
+          <div className="fixed top-4 right-4 z-50">
+            <ThemeToggle />
+          </div>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
