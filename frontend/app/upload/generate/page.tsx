@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { StepsIndicator } from "@/components/upload/steps-indicator";
 import { ScriptPreview } from "@/components/upload/script-preview";
 import { ProgressDisplay } from "@/components/upload/progress-display";
+import { GenerateSkeleton } from "@/components/upload/loading-skeleton";
 import { Button } from "@/components/ui/button";
 import { STORAGE_KEYS, type UploadMeta } from "@/lib/parser";
 import { useSSEStream } from "@/hooks/use-sse-stream";
@@ -115,7 +116,10 @@ export default function GeneratePage() {
         )}
 
         {!displayError && isLoading && (
-          <ProgressDisplay progress={progress} isActive={isLoading} />
+          <>
+            <ProgressDisplay progress={progress} isActive={isLoading} />
+            <GenerateSkeleton />
+          </>
         )}
 
         {hasScript && (
