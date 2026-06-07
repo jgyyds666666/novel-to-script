@@ -49,7 +49,7 @@
 
 | 功能 | 状态 | 说明 |
 |------|------|------|
-| Fountain 导出 UI | ⬜ | 前端接入 Fountain 格式下载 |
+| Fountain 导出 UI | ✅ done | `feat/fountain-export` | 前端接入 Fountain 格式下载，可导入 Final Draft / Fade In |
 | 分镜脚本扩展 | ⬜ | 可选 shot 块生成 |
 | UI 打磨 | ⬜ | 加载骨架屏/暗色模式/响应式优化 |
 | 🎬 Demo 视频 | ✅ done | `main` | [B 站链接](https://www.bilibili.com/video/BV1vw7y6hEME/) — 全链路演示含人声讲解 |

@@ -2,6 +2,7 @@ import { useState } from "react";
 import yaml from "js-yaml";
 import type { ContentBlock, Script } from "@/lib/types";
 import { SCRIPT_TYPE_LABELS } from "@/lib/constants";
+import { toFountain } from "@/lib/fountain";
 
 interface ScriptPreviewProps {
   script: Script;
@@ -23,6 +24,17 @@ export function ScriptPreview({ script }: ScriptPreviewProps) {
     const a = document.createElement("a");
     a.href = url;
     a.download = `${script.meta.title || "script"}.yaml`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleDownloadFountain = () => {
+    const fountainString = toFountain(script);
+    const blob = new Blob([fountainString], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${script.meta.title || "script"}.fountain`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -52,12 +64,20 @@ export function ScriptPreview({ script }: ScriptPreviewProps) {
             </button>
           ))}
         </div>
-        <button
-          onClick={handleDownload}
-          className="inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
-        >
-          ↓ 下载 YAML
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleDownloadFountain}
+            className="inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+          >
+            ↓ Fountain
+          </button>
+          <button
+            onClick={handleDownload}
+            className="inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+          >
+            ↓ 下载 YAML
+          </button>
+        </div>
       </div>
 
       {activeTab === "summary" && <SummaryView script={script} />}
