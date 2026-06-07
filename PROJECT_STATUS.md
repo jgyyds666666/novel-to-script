@@ -1,7 +1,7 @@
 # Project Status — Novel to Script
 
-> 最后更新: 2026-06-05
-> 当前阶段: 第二轮 MVP — DeepSeek AI 全链路已接入
+> 最后更新: 2026-06-07
+> 当前阶段: 第三轮 — 合规整改 + 体验打磨
 
 ## 开发策略
 
@@ -35,7 +35,14 @@
 | Schema 参考页 | ✅ done | `feat/api-key-ui-and-ux` | `/docs/schema` 渲染 SCHEMA-RFC.md |
 | Anthropic 设计系统 | ✅ done | `main` (5a3e89f) | 全站 Anthropic 暖色调主题 + Poppins/Lora 字体 + 组件精修 |
 | 设计 Skill | ✅ done | `main` (5a3e89f) | `.claude/skills/anthropic-design/SKILL.md` 完整设计系统文档 |
-| TypeScript 修复 | ✅ done | `main` (待提交) | `script-preview.tsx` ContentBlock 类型修复 |
+| TypeScript 修复 | ✅ done | `main` (b03f0e8) | `script-preview.tsx` ContentBlock 类型修复 |
+| Markdown 章节支持 | ✅ done | `main` (497533e) | 正则支持 `##第3章` 等 Markdown 标题格式 |
+| 章节编号修复 | ✅ done | `main` (af9dd7b) | 无标记时章节编号显示错误修复 |
+| Demo 视频链接 | ✅ done | `main` (1ea1d23) | README + PROJECT_STATUS 中更新 B 站链接 |
+| CLAUDE.md 规则 | ✅ done | `main` (a30fdac) | 自动化规则 + shadcn/ui 组件安装 |
+| 比赛合规自检 | ✅ done | `main` (本次) | 11 项合规清单逐项检查 + 整改 |
+| Git 配置统一 | ✅ done | `main` (本次) | user.name 从 `jg` 改为 `jgyyds666666` |
+| PR 工作流规则 | ✅ done | `main` (本次) | CLAUDE.md 新增强制 feature-branch+PR 规则 |
 
 ### 用户完整流程
 ```
@@ -49,11 +56,30 @@
 
 | 功能 | 状态 | 说明 |
 |------|------|------|
+| 比赛合规整改 | ✅ done | `main` | Git 配置统一 + CLAUDE.md PR 工作流规则 + 合规自检 |
 | Fountain 导出 UI | ⬜ | 前端接入 Fountain 格式下载 |
 | 分镜脚本扩展 | ⬜ | 可选 shot 块生成 |
 | UI 打磨 | ⬜ | 加载骨架屏/暗色模式/响应式优化 |
 | 🎬 Demo 视频 | ✅ done | `main` | [B 站链接](https://www.bilibili.com/video/BV1vw7y6hEME/) — 全链路演示含人声讲解 |
 | README 补全 | ✅ done | `main` | 汇总 Demo 链接、依赖表、目录结构 |
+
+## 比赛合规自检 (2026-06-07)
+
+基于 competition-submit skill 的 11 项硬性合规清单逐项检查：
+
+| # | 检查项 | 状态 | 备注 |
+|---|--------|------|------|
+| 1 | 公开仓库 | 🟡 | 当前私有，6/8 截止后必须公开 |
+| 2 | README 完整 | 🟢 | 含简介、议题、依赖、原创声明、运行步骤、分工 |
+| 3 | Demo 视频 | 🟡 | B 站链接已写入，需确认可播放 + 有语音 |
+| 4 | 持续交付 | 🟡 | 6/5-6/6 有多个 feature 分支，但部分 commit 直接推 main（已整改） |
+| 5 | Commit 时间窗 | 🟢 | 全部落在 2026-06-05 ~ 2026-06-06 |
+| 6 | 议题对齐 | 🟢 | AI 小说转剧本工具 |
+| 7 | 第三方依赖声明 | 🟢 | README 有完整依赖表 |
+| 8 | 自有代码复用声明 | 🟢 | 已声明全新开发 |
+| 9 | 主分支可运行 | 🟡 | 需验证 |
+| 10 | 多人分工可追溯 | 🟡 | 单人队伍，已统一 git 配置为 jgyyds666666 |
+| 11 | 多模块布局 | 🟢 | frontend/ + backend/ 分离 |
 
 ## Known Issues
 
