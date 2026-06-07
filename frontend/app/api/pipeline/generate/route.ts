@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
       title,
       language,
       fileName,
+      enableShots,
       apiKey,
     } = body as {
       chapters?: ChapterSummary[];
@@ -25,6 +26,7 @@ export async function POST(request: NextRequest) {
       title?: string;
       language?: string;
       fileName?: string;
+      enableShots?: boolean;
       apiKey?: string;
     };
 
@@ -81,6 +83,7 @@ export async function POST(request: NextRequest) {
               title: title || "未命名剧本",
               language: language || "zh-CN",
               fileName,
+              enableShots,
               apiKey: resolvedApiKey,
             },
             onProgress
